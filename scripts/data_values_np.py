@@ -289,68 +289,6 @@ def mean_errors_AO():
                 'error at 20 min: ' + str(running_sum_20minl/number_of_probl) + '\n'
                 'error at 60 min: ' + str(running_sum_60minl/number_of_probl) + '\n'
                 'avg # of nodes: ' + str(running_sum_nodesl/number_of_probl) + '\n')
-#def mean_errors_OR():
-    for abstraction in OR_proper:
-        number_of_prob = 0
-        running_sum_1min = 0
-        running_sum_20min = 0
-        running_sum_60min = 0
-        running_sum_nodes = 0
-        number_of_probl = 0
-        running_sum_1minl = 0
-        running_sum_20minl = 0
-        running_sum_60minl = 0
-        running_sum_nodesl = 0
-        for small in s_List:
-            problem = small.split('.uai')[0]
-            if abstraction in small and 'OR' in small:
-                df = pd.read_csv(small + '.csv')
-                df = df.replace('-inf',0,regex = True)
-                lastRow = int(df.shape[0])
-                idx1 = df[df.Col10 >= 60].index[1]
-                idx20 = df[df.Col10 >= 1200].index[1]
-                try:
-                    idx60 = df[df.Col10 >= 3600].index[1]
-                except:
-                    idx60 = lastRow - 2
-                running_sum_1min += abs(findZ(problem) - float('%.2f' % float(df.iloc[idx1,2])))
-                running_sum_20min += abs(findZ(problem) - float('%.2f' % float(df.iloc[idx20,2])))
-                running_sum_60min += abs(findZ(problem) - float('%.2f' % float(df.iloc[idx60, 2])))
-                running_sum_nodes += float('%.2f' % float(df.iloc[lastRow - 2, 11]))
-                number_of_prob += 1
-        if number_of_prob == 0:
-            continue
-        else:
-            print(abstraction + ' times for OR_proper small problems' + '\n'
-                'error at 1 min: ' + str(running_sum_1min/number_of_prob) + '\n'
-                'error at 20 min: ' + str(running_sum_20min/number_of_prob) + '\n'
-                'error at 60 min: ' + str(running_sum_60min/number_of_prob) + '\n'
-                'avg # of nodes: ' + str(running_sum_nodes/number_of_prob) + '\n')
-        for large in l_List:
-            problem = small.split('.uai')[0]
-            if abstraction in large and 'OR' in large:
-                df = pd.read_csv(large + '.csv')
-                df = df.replace('-inf',0,regex = True)
-                lastRow = int(df.shape[0])
-                idx1l = df[df.Col10 >= 60].index[1]
-                idx20l = df[df.Col10 >= 1200].index[1]
-                try:
-                    idx60l = df[df.Col10 >= 3600].index[1]
-                except:
-                    idx60l = lastRow - 2
-                running_sum_1minl += abs(float(df.iloc[0,9]) - float('%.2f' % float(df.iloc[idx1l,2])))
-                running_sum_20minl += abs(float(df.iloc[0,9]) - float('%.2f' % float(df.iloc[idx20l,2])))
-                running_sum_60minl += abs(float(df.iloc[0,9]) - float('%.2f' % float(df.iloc[idx60l, 2])))
-                running_sum_nodesl += float('%.2f' % float(df.iloc[lastRow - 2, 11]))
-                number_of_probl += 1
-        if number_of_probl == 0:
-            continue
-        else:
-            print(abstraction + ' times for OR_proper large problems' + '\n'
-                'error at 1 min: ' + str(running_sum_1minl/number_of_probl) + '\n'
-                'error at 20 min: ' + str(running_sum_20minl/number_of_probl) + '\n'
-                'error at 60 min: ' + str(running_sum_60minl/number_of_probl) + '\n'
-                'avg # of nodes: ' + str(running_sum_nodesl/number_of_probl) + '\n')
 
 def main():
   #  create_csv()
